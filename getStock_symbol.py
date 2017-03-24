@@ -32,19 +32,21 @@ except:
 try:
     i = 0
     for stockClass in [600,601,603, 0,2,300]:
-        i= i + 1
         for stockID in range(0,999):
             id = "%06d" % (stockClass * 1000 + stockID)
             if id not in symbol:
+                i= i + 1
                 try :            
                     ts.get_k_data(id)
                     symbol[id] = 1
+                    print("write %s" % (id) )
                 except IndexError as err:
                     symbol[id] = None
                     print("%s doesn't exist" % id )
-        if (i == 50): # save to database every 50 symbol
-            i = 0
-            to_json(symbol)
+            if (i == 50): # save to database every 50 symbol
+                i = 0
+                print("write into files")
+                to_json(symbol)
 except: 
     to_json(symbol)
 
